@@ -1,0 +1,19 @@
+{
+  "global": {
+    "globalBindingDataTestObj": [],
+    "globalAutoLayerMarkEnable": true
+  },
+  "1626b14d6a2": {
+    "guideLinesEnabled": true,
+    "backgroundX": 0,
+    "backgroundY": 0,
+    "backgroundWidth": -1,
+    "backgroundHeight": -1,
+    "useBgImage": true,
+    "useBgColor": true,
+    "backgroundAlpha": 100,
+    "bindingDataTestObj": [],
+    "backgroundType": "null",
+    "backgroundImage": "/Users/lo/Desktop/123131/button.png"
+  }
+}
