@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg,blue_plane_png,blue_bullet_png,myplaneexplosion_json,myplaneexplosion_png,myplaneexplosion2_png,myplaneexplosion2_json,my_bullet_purple_png,my_bullet_red_png,purple_plane_png,red_plane_png,small_enemy_png,small_png,small_json,play_2_png,play_1_png,big_png,big_json,big_1_png,big_2_png",
 			"name": "preload"
 		}
 	],
@@ -152,9 +152,104 @@
 			"name": "fly_json"
 		},
 		{
-			"name": "bggun_jpg",
+			"url": "assets/background/bggun.jpg",
 			"type": "image",
-			"url": "assets/background/bggun.jpg"
+			"name": "bggun_jpg"
+		},
+		{
+			"url": "assets/plane/blue_plane.png",
+			"type": "image",
+			"name": "blue_plane_png"
+		},
+		{
+			"url": "assets/plane/blue_bullet.png",
+			"type": "image",
+			"name": "blue_bullet_png"
+		},
+		{
+			"url": "assets/MoviceClip/myplaneexplosion.json",
+			"type": "json",
+			"name": "myplaneexplosion_json"
+		},
+		{
+			"url": "assets/MoviceClip/myplaneexplosion.png",
+			"type": "image",
+			"name": "myplaneexplosion_png"
+		},
+		{
+			"url": "assets/MoviceClip/myplaneexplosion.png",
+			"type": "image",
+			"name": "myplaneexplosion2_png"
+		},
+		{
+			"url": "assets/MoviceClip/myplaneexplosion.json",
+			"type": "json",
+			"name": "myplaneexplosion2_json"
+		},
+		{
+			"url": "assets/plane/my_bullet_purple.png",
+			"type": "image",
+			"name": "my_bullet_purple_png"
+		},
+		{
+			"url": "assets/plane/my_bullet_red.png",
+			"type": "image",
+			"name": "my_bullet_red_png"
+		},
+		{
+			"url": "assets/plane/purple_plane.png",
+			"type": "image",
+			"name": "purple_plane_png"
+		},
+		{
+			"url": "assets/plane/red_plane.png",
+			"type": "image",
+			"name": "red_plane_png"
+		},
+		{
+			"url": "assets/plane/small_enemy.png",
+			"type": "image",
+			"name": "small_enemy_png"
+		},
+		{
+			"url": "assets/MoviceClip/small.png",
+			"type": "image",
+			"name": "small_png"
+		},
+		{
+			"url": "assets/MoviceClip/small.json",
+			"type": "json",
+			"name": "small_json"
+		},
+		{
+			"url": "assets/Button/play_2.png",
+			"type": "image",
+			"name": "play_2_png"
+		},
+		{
+			"url": "assets/Button/play_1.png",
+			"type": "image",
+			"name": "play_1_png"
+		},
+		{
+			"url": "assets/MoviceClip/big.png",
+			"type": "image",
+			"name": "big_png"
+		},
+		{
+			"url": "assets/MoviceClip/big.json",
+			"type": "json",
+			"name": "big_json"
+		},
+		{
+			"url": "assets/plane/big_1.png",
+			"type": "image",
+			"name": "big_1_png"
+		},
+		{
+			"url": "assets/plane/big_2.png",
+			"type": "image",
+			"name": "big_2_png"
 		}
 	]
 }

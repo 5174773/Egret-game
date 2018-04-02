@@ -1,0 +1,28 @@
+{"mc":{
+	"small":{
+		"frameRate":4,
+		"labels":[
+			{"name":"baoza","frame":1,"end":2}
+			
+			],
+		"events":[
+			
+			],
+		"frames":[
+			
+			{
+			"res":"small_2",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"small_3",
+			"x":0,
+			"y":1
+			}
+			]
+}},
+	"res":{
+		"small_3":{"x":1,"y":44,"w":40,"h":37},
+		"small_2":{"x":1,"y":1,"w":40,"h":41}
+	}}

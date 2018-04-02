@@ -1,0 +1,52 @@
+{"mc":{
+	"explosion":{
+		"frameRate":5,
+		"labels":[
+			{"name":"exp","frame":1,"end":6}
+			
+			],
+		"events":[
+			
+			],
+		"frames":[
+			
+			{
+			"res":"myplaneexplosion_1",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"myplaneexplosion_2",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"myplaneexplosion_3",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"myplaneexplosion_4",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"myplaneexplosion_5",
+			"x":0,
+			"y":0
+			},
+			{
+			"res":"myplaneexplosion_6",
+			"x":0,
+			"y":0
+			}
+			]
+}},
+	"res":{
+		"myplaneexplosion_1":{"x":53,"y":53,"w":50,"h":50},
+		"myplaneexplosion_5":{"x":109,"y":1,"w":51,"h":50},
+		"myplaneexplosion_4":{"x":1,"y":1,"w":53,"h":50},
+		"myplaneexplosion_3":{"x":56,"y":1,"w":51,"h":50},
+		"myplaneexplosion_2":{"x":1,"y":53,"w":50,"h":50},
+		"myplaneexplosion_6":{"x":162,"y":1,"w":51,"h":50}
+	}}
