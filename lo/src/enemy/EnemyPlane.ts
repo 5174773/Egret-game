@@ -3,7 +3,7 @@ class EnemyPlane extends egret.Sprite {
     public flyLeft: boolean = true;   //是否向左飞
     public myEnemy: egret.Bitmap;
     public score: number;  //分数
-    public HP: number  = 1   //当前血量
+    public HP: number    //当前血量
     public bloodVolume: number  // 总血量
 
     constructor() {
@@ -14,6 +14,7 @@ class EnemyPlane extends egret.Sprite {
 
     initView() {
         this.myEnemy = Lg.createBitmapByName("small_enemy_png")
+        this.HP = 2
         this.myEnemy.scaleX = 1.7;
         this.myEnemy.scaleY = 1.7;
         this.addChild(this.myEnemy)

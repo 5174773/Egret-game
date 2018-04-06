@@ -17,7 +17,7 @@ class MainView extends egret.DisplayObjectContainer {
 
     public enemyBig: EnemyBig;
     public bigList: EnemyBig[] = [];
-    public bigNum: number = 10
+    public bigNum: number = 2
     public bigBullet: EnemyBullet;
     public bigBulletLits: EnemyBullet[] = []
 
@@ -78,7 +78,7 @@ class MainView extends egret.DisplayObjectContainer {
         this.timer1.addEventListener(egret.TimerEvent.TIMER, this.timerInitPlaneBullet1, this);
         // this.timer1.start();
         //big 敌机
-        var big = new egret.Timer(1000, 1);
+        var big = new egret.Timer(1000, 0);
         big.addEventListener(egret.TimerEvent.TIMER, this.timerInitBig, this);
         big.start();
         //物品
@@ -177,15 +177,18 @@ class MainView extends egret.DisplayObjectContainer {
         })
         //big 敌机
         gyg.bigList.forEach(function (enemyBig) {
-
             enemyBig.y += 0.1
         })
         gyg.bigBulletLits.forEach(function (bigBullet) {
             bigBullet.y += 10
+
+            if (bigBullet.y >= gyg.stage.stageHeight) {
+                if (bigBullet.parent != null) {
+                    gyg.removeChild(bigBullet)
+                }
+            }
         })
-
         gyg.gameHitTest();
-
     }
     //碰撞
     private gameHitTest(): void {
@@ -193,20 +196,24 @@ class MainView extends egret.DisplayObjectContainer {
         gyg.EnemyList.forEach(function (enemy) {
             gyg.BulletList.forEach(function (bullet) {
                 if (enemy.HP != 0 && enemy.hitTestPoint(bullet.x, bullet.y) == true) {
-                    enemy.EnemyExplosion(enemy, gyg, bullet)
-                    gyg.totalIntegral += 100;
+
                     if (bullet.parent != null) {
                         enemy.HP--
                         gyg.removeChild(bullet);
                     }
+                    if (enemy.HP == 0) {
+                        enemy.EnemyExplosion(enemy, gyg, bullet)
+                        gyg.totalIntegral += 100;
+                    }
                 }
                 gyg.bigList.forEach(function (enemyBig) {
                     if (enemyBig.HP != 0 && enemyBig.hitTestPoint(bullet.x, bullet.y) == true) {
-                        enemyBig.HP--
-                        // gyg.totalIntegral += 300;
-                        if (enemyBig.parent != null) {
-
-                            gyg.removeChild(enemyBig);
+                        if (bullet.parent != null) {
+                            enemyBig.HP--
+                            gyg.removeChild(bullet);
+                        }
+                        if (enemyBig.HP == 0) {
+                            enemyBig.initMoviceClip(enemyBig, gyg, bullet)
                         }
                     }
                 })
@@ -278,7 +285,7 @@ class MainView extends egret.DisplayObjectContainer {
             this.bigList.push(this.enemyBig)
 
         }
-        var bigEnemy: egret.Timer = new egret.Timer(1000, 0);
+        var bigEnemy: egret.Timer = new egret.Timer(3000, 2);
         bigEnemy.addEventListener(egret.TimerEvent.TIMER, this.initbigBullet, this);
         bigEnemy.start();
 
@@ -292,9 +299,7 @@ class MainView extends egret.DisplayObjectContainer {
             bigBullet.y = enemyBig.y + 84;
             gyg.addChild(bigBullet)
             gyg.bigBulletLits.push(bigBullet)
-
         })
-
     }
 
 
