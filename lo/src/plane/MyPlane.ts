@@ -25,6 +25,14 @@ class MyPlane extends egret.Sprite {
         this.addChild(this.myPlaneBitmap);
 
     }
+    public initImage(){
+        
+        this.myPlaneBitmap = Lg.createBitmapByName("purple_plane_png");
+        this.myPlaneBitmap.scaleX = 1.7;
+        this.myPlaneBitmap.scaleY = 1.7;
+        this.addChild(this.myPlaneBitmap);
+
+    }
     //飞机爆炸
     public PlaneExplosion() {
 

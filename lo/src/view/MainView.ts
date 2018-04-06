@@ -15,8 +15,20 @@ class MainView extends egret.DisplayObjectContainer {
     private EnemyNum: number = 6;
     public objEnemy: ObjPool<EnemyPlane>;
 
+    public enemyBig: EnemyBig;
+    public bigList: EnemyBig[] = [];
+    public bigNum: number = 10
+    public bigBullet: EnemyBullet;
+    public bigBulletLits: EnemyBullet[] = []
 
+    public flyLeft: boolean = true;
+
+    private bulletGo1: egret.Bitmap
+    private bulletGoList: Array<any> = []
     private myBullet: PlaneBullet;
+
+    public timer: egret.Timer
+    public timer1: egret.Timer
     constructor() {
         super()
 
@@ -26,25 +38,22 @@ class MainView extends egret.DisplayObjectContainer {
 
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.myPlaneView, this)
         this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this); // 帧事件
-        
+
     }
 
     myPlaneView() {
-
-        //积分
-        this.totalIntegralText = new egret.TextField();
-        this.totalIntegralText.text = "积分:" + this.totalIntegral;
-        this.totalIntegralText.x = 10;
-        this.totalIntegralText.y = 10;
-        this.addChild(this.totalIntegralText);
-
         //背景
         this.initBG()
         //玩家飞机
         this.MyPlane();
         //敌机
         this.enemyPlaneImage();
-
+        //积分
+        this.totalIntegralText = new egret.TextField();
+        this.totalIntegralText.text = "积分:" + this.totalIntegral;
+        this.totalIntegralText.x = 10;
+        this.totalIntegralText.y = 10;
+        this.addChild(this.totalIntegralText);
     }
     initBG() {   //背景
         let bggun = new BgMap();
@@ -52,18 +61,30 @@ class MainView extends egret.DisplayObjectContainer {
         bggun.start()
     }
 
-
     MyPlane() {   //玩家飞机
 
         this.myPlane = new MyPlane();
+
         this.addChild(this.myPlane);
         //触摸事件
         this.myPlane.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.planeMobile, this)
         this.myPlane.touchEnabled = true;
         //飞机子弹
-        var timer: egret.Timer = new egret.Timer(300, 0);
-        timer.addEventListener(egret.TimerEvent.TIMER, this.timerInitPlaneBullet, this);
-        timer.start();
+        this.timer = new egret.Timer(200, 0);
+        this.timer.addEventListener(egret.TimerEvent.TIMER, this.timerInitPlaneBullet, this);
+        this.timer.start();
+        //飞机子弹二
+        this.timer1 = new egret.Timer(200, 0);
+        this.timer1.addEventListener(egret.TimerEvent.TIMER, this.timerInitPlaneBullet1, this);
+        // this.timer1.start();
+        //big 敌机
+        var big = new egret.Timer(1000, 1);
+        big.addEventListener(egret.TimerEvent.TIMER, this.timerInitBig, this);
+        big.start();
+        //物品
+        var wupin: egret.Timer = new egret.Timer(8000, 0);
+        wupin.addEventListener(egret.TimerEvent.TIMER, this.timerInitwuping, this);
+        wupin.start();
     }
     //飞机移动
     planeMobile(event: egret.TouchEvent) {
@@ -72,14 +93,11 @@ class MainView extends egret.DisplayObjectContainer {
     }
 
     enemyPlaneImage() {  //敌机
-
-
         var timerEnemy: egret.Timer = new egret.Timer(1000, 0);
         timerEnemy.addEventListener(egret.TimerEvent.TIMER, this.timerInitEnemy, this);
         timerEnemy.start();
     }
     timerInitEnemy() {
-
         if (this.EnemyList.length < this.EnemyNum) {
             let enemy = new EnemyPlane()
             enemy.x = Math.ceil(Math.random() * this.stage.stageWidth)
@@ -89,9 +107,6 @@ class MainView extends egret.DisplayObjectContainer {
         }
 
     }
-
-
-
 
 
     /**帧事件 */
@@ -122,13 +137,52 @@ class MainView extends egret.DisplayObjectContainer {
                 }
             }
         })
-        //子弹
-        gyg.BulletList.forEach(function (bullet) {
-            bullet.y -= 16
-            // bullet.x += 6 * (Math.sin(bullet.y / 100))
+        //子弹形态二
+        gyg.bulletGoList.forEach(function (bulletGo1) {
+            bulletGo1.y += 1
+            if (bulletGo1.x <= 0) {
+                bulletGo1.flyLeft = false
+            }
+            if (bulletGo1.x >= gyg.stage.stageWidth - bulletGo1.width) {
+                bulletGo1.flyLeft = true;
+            }
+            if (bulletGo1.flyLeft == true) {  //运动位置 
+                bulletGo1.x -= 3;
+            } else {
+                bulletGo1.x += 3;
+            }
+
+            //碰撞 紫色
+            if (gyg.myPlane.hitTestPoint(bulletGo1.x, bulletGo1.y)) {
+                if (bulletGo1.parent != null) {
+                    gyg.removeChild(bulletGo1);
+                    gyg.pemgzhuang()
+
+                }
+            }
 
         })
+        gyg.BulletList.forEach(function (bullet) {
+            if (bullet.timerOne == true) {
+                bullet.y -= 20
+            }
+            if (bullet.timerOne == false && bullet.isAlive == true) {
+                bullet.y -= 16
+                bullet.x += 6 * (Math.sin(bullet.y / 100))
+            }
+            if (bullet.timerOne == false && bullet.isAlive == false) {
+                bullet.y -= 16
+                bullet.x -= 6 * (Math.sin(bullet.y / 100))
+            }
+        })
+        //big 敌机
+        gyg.bigList.forEach(function (enemyBig) {
 
+            enemyBig.y += 0.1
+        })
+        gyg.bigBulletLits.forEach(function (bigBullet) {
+            bigBullet.y += 10
+        })
 
         gyg.gameHitTest();
 
@@ -137,7 +191,6 @@ class MainView extends egret.DisplayObjectContainer {
     private gameHitTest(): void {
         let gyg: MainView = this
         gyg.EnemyList.forEach(function (enemy) {
-
             gyg.BulletList.forEach(function (bullet) {
                 if (enemy.HP != 0 && enemy.hitTestPoint(bullet.x, bullet.y) == true) {
                     enemy.EnemyExplosion(enemy, gyg, bullet)
@@ -146,27 +199,27 @@ class MainView extends egret.DisplayObjectContainer {
                         enemy.HP--
                         gyg.removeChild(bullet);
                     }
-
                 }
+                gyg.bigList.forEach(function (enemyBig) {
+                    if (enemyBig.HP != 0 && enemyBig.hitTestPoint(bullet.x, bullet.y) == true) {
+                        enemyBig.HP--
+                        // gyg.totalIntegral += 300;
+                        if (enemyBig.parent != null) {
 
+                            gyg.removeChild(enemyBig);
+                        }
+                    }
+                })
             })
         })
-
         gyg.totalIntegralText.text = "积分:" + gyg.totalIntegral;
-
-
     }
-
-
-
-
-
-
     //时间控制创建 子弹
     public timerInitPlaneBullet() {
         const objc: boolean = this.objcBullet.hasObjcet();
         const bullet = this.objcBullet.AllcoObj(PlaneBullet);
         bullet.initView(1)
+        bullet.timerOne = true
         bullet.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10
         bullet.y = this.myPlane.y - 65;
         if (objc == false) {
@@ -174,59 +227,81 @@ class MainView extends egret.DisplayObjectContainer {
             this.BulletList.push(bullet);
         }
     }
+
+    timerInitwuping() {
+        if (this.bulletGoList.length <= 1) {
+            this.bulletGo1 = new egret.Bitmap()
+            this.bulletGo1 = Lg.createBitmapByName("bullet_goods1_png")
+            this.bulletGo1.x = Math.random() * this.stage.stageWidth;
+            this.bulletGo1.y = 0
+            this.addChild(this.bulletGo1);
+            this.bulletGoList.push(this.bulletGo1)
+            if (Math.random() > 0.5) {
+                this.flyLeft = true;
+            } else {
+                this.flyLeft = false;
+            }
+        }
+    }
+    //时间控制创建 子弹
+    public timerInitPlaneBullet1() {
+        const objc: boolean = this.objcBullet.hasObjcet();
+        const bullet = this.objcBullet.AllcoObj(PlaneBullet);
+        bullet.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10 + 100
+        bullet.y = this.myPlane.y - 65;
+        bullet.isAlive = true;
+        bullet.timerOne = false
+        bullet.initView(2)
+        if (objc == false) {
+            this.addChild(bullet);
+            this.BulletList.push(bullet);
+        }
+        const objc2: boolean = this.objcBullet.hasObjcet();
+        const bullet2 = this.objcBullet.AllcoObj(PlaneBullet);
+        bullet2.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10 - 100
+        bullet2.y = this.myPlane.y - 65;
+        bullet2.isAlive = false;
+        bullet2.initView(2)
+        bullet2.timerOne = false
+        if (objc2 == false) {
+            this.addChild(bullet2);
+            this.BulletList.push(bullet2);
+        }
+    }
+    timerInitBig() {
+
+        while (this.bigList.length < this.bigNum) {
+            this.enemyBig = new EnemyBig();
+            this.addChildAt(this.enemyBig, 1)
+            this.enemyBig.x = Math.random() * (this.stage.stageWidth - this.enemyBig.width);
+            this.enemyBig.y = 0;
+            this.bigList.push(this.enemyBig)
+
+        }
+        var bigEnemy: egret.Timer = new egret.Timer(1000, 0);
+        bigEnemy.addEventListener(egret.TimerEvent.TIMER, this.initbigBullet, this);
+        bigEnemy.start();
+
+    }
+
+    initbigBullet() {
+        let gyg: MainView = this
+        this.bigList.forEach(function (enemyBig) {
+            const bigBullet = new EnemyBullet();
+            bigBullet.x = enemyBig.x + 84;
+            bigBullet.y = enemyBig.y + 84;
+            gyg.addChild(bigBullet)
+            gyg.bigBulletLits.push(bigBullet)
+
+        })
+
+    }
+
+
+    pemgzhuang() {
+        this.timer.stop();
+        this.timer1.start();
+        this.myPlane.initImage()
+
+    }
 }
-
-    //    public timerInitPlaneBullet() {
-    //     const objc: boolean = this.objcBullet.hasObjcet();
-    //     const bullet = this.objcBullet.AllcoObj(PlaneBullet);
-    //     bullet.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10
-    //     bullet.y = this.myPlane.y - 65;
-    //       if (objc == false) {
-    //         this.addChild(bullet);
-    //         this.BulletList.push(bullet);
-    //     }
-
-    // }
-
-
-    //  //时间控制创建 子弹
-    // public timerInitPlaneBullet() {
-    //     const objc: boolean = this.objcBullet.hasObjcet();
-    //     const bullet = this.objcBullet.AllcoObj(PlaneBullet);
-    //     bullet.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10 + 100
-    //     bullet.y = this.myPlane.y - 65;
-    //     bullet.isAlive = true;
-    //     if (objc == false) {
-    //         this.addChild(bullet);
-    //         this.BulletList.push(bullet);
-    //     }
-
-    //     const objc2: boolean = this.objcBullet.hasObjcet();
-    //     const bullet2 = this.objcBullet.AllcoObj(PlaneBullet);
-    //     bullet2.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10 - 100
-    //     bullet2.y = this.myPlane.y - 65;
-    //     bullet2.isAlive = false;
-    //     if (objc2 == false) {
-    //         this.addChild(bullet2);
-    //         this.BulletList.push(bullet2);
-    //     }
-    // }
-
-    //  gyg.BulletList.forEach(function (bullet) {
-    //         if (bullet.isAlive == true) {
-    //             bullet.y -= 16
-    //             bullet.x += 6 * (Math.sin(bullet.y / 100))
-
-    //         }
-    //         if (bullet.isAlive == false) {
-    //             bullet.y -= 16
-    //             bullet.x -= 6 * (Math.sin(bullet.y / 100))
-
-    //         }
-
-    //     })
-
-
-
-
-

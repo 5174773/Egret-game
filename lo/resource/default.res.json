@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg,blue_plane_png,blue_bullet_png,myplaneexplosion_json,myplaneexplosion_png,myplaneexplosion2_png,myplaneexplosion2_json,my_bullet_purple_png,my_bullet_red_png,purple_plane_png,red_plane_png,small_enemy_png,small_png,small_json,play_2_png,play_1_png,big_png,big_json,big_1_png,big_2_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg,blue_plane_png,blue_bullet_png,myplaneexplosion_json,myplaneexplosion_png,myplaneexplosion2_png,myplaneexplosion2_json,my_bullet_purple_png,my_bullet_red_png,purple_plane_png,red_plane_png,small_enemy_png,small_png,small_json,play_2_png,play_1_png,big_png,big_json,big_1_png,big_2_png,n3_png,bullet_goods1_png,bullet_goods2_png,boss_bullet_default_png",
 			"name": "preload"
 		}
 	],
@@ -250,6 +250,26 @@
 			"url": "assets/plane/big_2.png",
 			"type": "image",
 			"name": "big_2_png"
+		},
+		{
+			"url": "assets/plane/n3.png",
+			"type": "image",
+			"name": "n3_png"
+		},
+		{
+			"url": "assets/plane/bullet_goods1.png",
+			"type": "image",
+			"name": "bullet_goods1_png"
+		},
+		{
+			"url": "assets/plane/bullet_goods2.png",
+			"type": "image",
+			"name": "bullet_goods2_png"
+		},
+		{
+			"name": "boss_bullet_default_png",
+			"type": "image",
+			"url": "assets/plane/boss_bullet_default.png"
 		}
 	]
 }

@@ -33,9 +33,6 @@ class startView extends egret.Sprite {
         mc1.scaleY = 1.5;
         mc1.gotoAndPlay("start", -1);
 
-
-
-
     }
     /**
      * 点击按钮

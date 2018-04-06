@@ -4,6 +4,7 @@ class PlaneBullet extends egret.Sprite {
     public isAlive: boolean;        // 存活状态
 
     public myBUllet: egret.Bitmap;
+    public timerOne:boolean 
 
     constructor() {
         super()
