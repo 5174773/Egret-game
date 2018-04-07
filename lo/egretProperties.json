@@ -32,6 +32,9 @@
     },
     {
       "name": "game"
+    },
+    {
+       "name": "socket"
     }
   ]
 }

@@ -26,7 +26,7 @@ class Main extends eui.UILayer {
         this.runGame().catch(e => {
             console.log(e);
 
-            
+
         })
     }
 
@@ -77,7 +77,95 @@ class Main extends eui.UILayer {
         let view = new startView();
         this.addChild(view);
 
+
+        this.onGet()
+
+        
+
+
+
     }
+
+
+    onGet() {
+
+
+        var request = new egret.HttpRequest();
+        request.responseType = egret.HttpResponseType.TEXT;
+        request.open("http://192.168.0.103:8080/game/10/search", egret.HttpMethod.GET);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.send();
+        request.addEventListener(egret.Event.COMPLETE, this.onGetComplete, this);   //成功
+        request.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onGetIOError, this);   //失败
+        request.addEventListener(egret.ProgressEvent.PROGRESS, this.onGetProgress, this);   //进度
+
+
+    }
+    public requestRoomId: number;
+    public requestUserId: number;
+    onGetComplete(event: egret.Event) {  //成功
+        var request = <egret.HttpRequest>event.currentTarget;
+        console.log("get data : ", request.response);
+        var requestData: Model = JSON.parse(request.response);
+
+        this.requestRoomId = requestData.data.roomId;
+        this.requestUserId = requestData.data.userId;
+
+
+        var responseLabel = new egret.TextField();
+        responseLabel.size = 18;
+        this.addChild(responseLabel);
+        responseLabel.x = 50;
+        responseLabel.y = 70;
+
+        this.onWebSocket()
+
+    }
+    onGetIOError(event: egret.IOErrorEvent) {
+        console.log("get error : " + event);
+        
+
+    }
+    onGetProgress(event: egret.ProgressEvent) {
+        console.log("get progress : " + Math.floor(100 * event.bytesLoaded / event.bytesTotal) + "%");
+
+    }
+
+
+
+    public sock: egret.WebSocket
+    onWebSocket() {
+
+        this.sock = new egret.WebSocket();
+
+        this.sock.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.onReceiveMessage, this);
+        this.sock.addEventListener(egret.Event.CONNECT, this.onSocketOpen, this);
+
+
+        this.sock.connect("192.168.0.103/SinglePKRoom/" + this.requestRoomId + "/" + this.requestUserId, 8080);
+
+    }
+    onReceiveMessage() {
+
+        var msg = this.sock.readUTF();
+
+        console.log("收到数据：" + msg);
+
+
+    }
+    onSocketOpen() {
+
+        // var cmd = '{"cmd":"uzwan_login","gameId":"0","from":"guzwan","userId":"3565526"}';
+
+        // this.sock.writeUTF(cmd);
+
+        // console.log("连接成功，发送数据：" + cmd);
+
+    }
+
+
+
+
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
      * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.

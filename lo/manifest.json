@@ -6,11 +6,12 @@
 		"libs/modules/assetsmanager/assetsmanager.js",
 		"libs/modules/tween/tween.js",
 		"libs/modules/promise/promise.js",
-		"libs/modules/game/game.js"
+		"libs/modules/game/game.js",
+		"libs/modules/socket/socket.js"
 	],
 	"game": [
+		"bin-debug/calss/AssetAdapter.js",
 		"bin-debug/enemy/EnemyBoss.js",
-		"bin-debug/Main.js",
 		"bin-debug/calss/BgMap.js",
 		"bin-debug/calss/Lg.js",
 		"bin-debug/calss/LoadingUI.js",
@@ -18,9 +19,10 @@
 		"bin-debug/calss/Platform.js",
 		"bin-debug/calss/ThemeAdapter.js",
 		"bin-debug/enemy/EnemyBig.js",
-		"bin-debug/calss/AssetAdapter.js",
+		"bin-debug/Main.js",
 		"bin-debug/enemy/EnemyBullet.js",
 		"bin-debug/enemy/EnemyPlane.js",
+		"bin-debug/model/Model.js",
 		"bin-debug/plane/MyPlane.js",
 		"bin-debug/plane/PlaneBullet.js",
 		"bin-debug/sounds/AudioManager.js",
