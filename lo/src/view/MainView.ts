@@ -7,6 +7,9 @@ class MainView extends egret.DisplayObjectContainer {
     public totalIntegral: number = 0;
     public totalIntegralText: egret.TextField;
 
+    
+    private soundChannel: egret.SoundChannel;
+
     private myPlane: MyPlane;  //玩家飞机
     public BulletList: PlaneBullet[] = []
     public objcBullet: ObjPool<PlaneBullet>; //子弹缓存池
@@ -16,6 +19,7 @@ class MainView extends egret.DisplayObjectContainer {
     public objEnemy: ObjPool<EnemyPlane>;
 
     public enemyBig: EnemyBig;
+    public big: egret.Timer
     public bigList: EnemyBig[] = [];
     public bigNum: number = 2
     public bigBullet: EnemyBullet;
@@ -29,9 +33,14 @@ class MainView extends egret.DisplayObjectContainer {
 
     public timer: egret.Timer
     public timer1: egret.Timer
-    constructor() {
-        super()
+    public timerEnemy: egret.Timer
+    private wupin: egret.Timer
 
+
+    private uyguyguygu: startView
+    constructor(t) {
+        super()
+        this.uyguyguygu = t;
         //创建池子
         this.objcBullet = new ObjPool<PlaneBullet>();
         this.objEnemy = new ObjPool<EnemyPlane>();
@@ -59,12 +68,13 @@ class MainView extends egret.DisplayObjectContainer {
         let bggun = new BgMap();
         this.addChildAt(bggun, 0);
         bggun.start()
+      
+
     }
 
     MyPlane() {   //玩家飞机
 
         this.myPlane = new MyPlane();
-
         this.addChild(this.myPlane);
         //触摸事件
         this.myPlane.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.planeMobile, this)
@@ -78,13 +88,13 @@ class MainView extends egret.DisplayObjectContainer {
         this.timer1.addEventListener(egret.TimerEvent.TIMER, this.timerInitPlaneBullet1, this);
         // this.timer1.start();
         //big 敌机
-        var big = new egret.Timer(1000, 0);
-        big.addEventListener(egret.TimerEvent.TIMER, this.timerInitBig, this);
-        big.start();
+        this.big = new egret.Timer(1000, 0);
+        this.big.addEventListener(egret.TimerEvent.TIMER, this.timerInitBig, this);
+        this.big.start();
         //物品
-        var wupin: egret.Timer = new egret.Timer(8000, 0);
-        wupin.addEventListener(egret.TimerEvent.TIMER, this.timerInitwuping, this);
-        wupin.start();
+        this.wupin = new egret.Timer(8000, 0);
+        this.wupin.addEventListener(egret.TimerEvent.TIMER, this.timerInitwuping, this);
+        this.wupin.start();
     }
     //飞机移动
     planeMobile(event: egret.TouchEvent) {
@@ -93,9 +103,9 @@ class MainView extends egret.DisplayObjectContainer {
     }
 
     enemyPlaneImage() {  //敌机
-        var timerEnemy: egret.Timer = new egret.Timer(1000, 0);
-        timerEnemy.addEventListener(egret.TimerEvent.TIMER, this.timerInitEnemy, this);
-        timerEnemy.start();
+        this.timerEnemy = new egret.Timer(1000, 0);
+        this.timerEnemy.addEventListener(egret.TimerEvent.TIMER, this.timerInitEnemy, this);
+        this.timerEnemy.start();
     }
     timerInitEnemy() {
         if (this.EnemyList.length < this.EnemyNum) {
@@ -108,10 +118,12 @@ class MainView extends egret.DisplayObjectContainer {
 
     }
 
-
     /**帧事件 */
     onEnterFrame() {
         let gyg: MainView = this
+        if (gyg == null) {
+            return;
+        }
         //敌机
         gyg.EnemyList.forEach(function (enemy) {
             enemy.y += enemy.speed
@@ -177,24 +189,44 @@ class MainView extends egret.DisplayObjectContainer {
         })
         //big 敌机
         gyg.bigList.forEach(function (enemyBig) {
-            enemyBig.y += 0.1
+            enemyBig.y += 0.2
+            if (enemyBig.x <= 0) {   //碰到墙面 反向走
+                enemyBig.flyLeft = false
+            }
+            if (enemyBig.x >= gyg.stage.stageWidth - enemyBig.width) { //碰到墙面 反向走
+                enemyBig.flyLeft = true;
+            }
+            if (enemyBig.flyLeft) {  //运动位置 
+                enemyBig.x -= Math.ceil(Math.random() * 3);
+            } else {
+                enemyBig.x += Math.ceil(Math.random() * 3);
+            }
+            gyg.myPlanebaoza(enemyBig.x, enemyBig.y);
         })
         gyg.bigBulletLits.forEach(function (bigBullet) {
             bigBullet.y += 10
-
+            if (gyg == null || gyg.stage == null) {
+                return;
+            }
             if (bigBullet.y >= gyg.stage.stageHeight) {
                 if (bigBullet.parent != null) {
                     gyg.removeChild(bigBullet)
                 }
             }
+            gyg.myPlanebaoza(bigBullet.x, bigBullet.y);
         })
         gyg.gameHitTest();
     }
     //碰撞
     private gameHitTest(): void {
+       
         let gyg: MainView = this
+         if(gyg.totalIntegralText == null){
+            return;
+        }
         gyg.EnemyList.forEach(function (enemy) {
             gyg.BulletList.forEach(function (bullet) {
+                gyg.myPlanebaoza(enemy.x, enemy.y);
                 if (enemy.HP != 0 && enemy.hitTestPoint(bullet.x, bullet.y) == true) {
 
                     if (bullet.parent != null) {
@@ -202,6 +234,8 @@ class MainView extends egret.DisplayObjectContainer {
                         gyg.removeChild(bullet);
                     }
                     if (enemy.HP == 0) {
+                        var sound: egret.Sound = RES.getRes("explosion_mp3");
+                        sound.play(0, 1);
                         enemy.EnemyExplosion(enemy, gyg, bullet)
                         gyg.totalIntegral += 100;
                     }
@@ -213,9 +247,13 @@ class MainView extends egret.DisplayObjectContainer {
                             gyg.removeChild(bullet);
                         }
                         if (enemyBig.HP == 0) {
+
+                            var sound: egret.Sound = RES.getRes("bigexplosion_wav");
+                            sound.play(0, 1);
                             enemyBig.initMoviceClip(enemyBig, gyg, bullet)
                         }
                     }
+
                 })
             })
         })
@@ -233,6 +271,8 @@ class MainView extends egret.DisplayObjectContainer {
             this.addChild(bullet);
             this.BulletList.push(bullet);
         }
+        var sound: egret.Sound = RES.getRes("shoot_mp3");
+        sound.play(0, 1);
     }
 
     timerInitwuping() {
@@ -290,7 +330,6 @@ class MainView extends egret.DisplayObjectContainer {
         bigEnemy.start();
 
     }
-
     initbigBullet() {
         let gyg: MainView = this
         this.bigList.forEach(function (enemyBig) {
@@ -302,11 +341,44 @@ class MainView extends egret.DisplayObjectContainer {
         })
     }
 
+    myPlanebaoza(x, y) {
+
+        if (this.myPlane.hitTestPoint(x, y) == true) {
+
+              //背景关闭
+
+            this.timer.stop() //停止 时间创建
+            this.timer1.stop()
+            this.big.stop()
+            this.timerEnemy.stop()
+            this.wupin.stop()
+            this.removeChildren();
+
+            this.myPlane.touchEnabled = false; //点击事件关闭
+
+            // this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this); 
+            this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this)
+            let sktop = new StopView(this.uyguyguygu)
+
+
+            this.uyguyguygu.addChild(sktop)
+
+
+            this.uyguyguygu.removeChild(this)
+
+
+        }
+
+
+    }
+
 
     pemgzhuang() {
+
         this.timer.stop();
         this.timer1.start();
         this.myPlane.initImage()
+
 
     }
 }

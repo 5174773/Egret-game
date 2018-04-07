@@ -9,8 +9,8 @@
 		"libs/modules/game/game.js"
 	],
 	"game": [
+		"bin-debug/enemy/EnemyBoss.js",
 		"bin-debug/Main.js",
-		"bin-debug/calss/AssetAdapter.js",
 		"bin-debug/calss/BgMap.js",
 		"bin-debug/calss/Lg.js",
 		"bin-debug/calss/LoadingUI.js",
@@ -18,12 +18,14 @@
 		"bin-debug/calss/Platform.js",
 		"bin-debug/calss/ThemeAdapter.js",
 		"bin-debug/enemy/EnemyBig.js",
-		"bin-debug/enemy/EnemyBoss.js",
+		"bin-debug/calss/AssetAdapter.js",
 		"bin-debug/enemy/EnemyBullet.js",
 		"bin-debug/enemy/EnemyPlane.js",
 		"bin-debug/plane/MyPlane.js",
 		"bin-debug/plane/PlaneBullet.js",
+		"bin-debug/sounds/AudioManager.js",
 		"bin-debug/view/MainView.js",
-		"bin-debug/view/startView.js"
+		"bin-debug/view/startView.js",
+		"bin-debug/view/StopView.js"
 	]
 }

@@ -1,9 +1,12 @@
-class startView extends egret.Sprite {
+class StopView extends egret.Sprite {
 
-    public audio:AudioManager;
+    private view:startView
 
-    constructor() {
+    constructor(view) {
         super()
+       
+       this.view = view
+        
 
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initStartView, this);
     }
@@ -18,22 +21,11 @@ class startView extends egret.Sprite {
         sky.height = stageH;
 
         let startButton = new eui.Button();
-        startButton.skinName = "startButtonSkin";
+        startButton.skinName = "btnzailaiyici";
         startButton.x = (this.stage.stageWidth / 2) - (startButton.width / 2);
         startButton.y = this.stage.stageHeight / 3;
         this.addChild(startButton);
         startButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
-
-        var data = RES.getRes("fly_json");
-        var txtr = RES.getRes("fly_png");
-        var mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
-        var mc1: egret.MovieClip = new egret.MovieClip(mcFactory.generateMovieClipData("fly"));
-        this.addChild(mc1);
-        mc1.x = (this.stage.stageWidth / 2) - (startButton.width / 2);
-        mc1.y = this.stage.stageHeight / 3.5;
-        mc1.scaleX = 1.5
-        mc1.scaleY = 1.5;
-        mc1.gotoAndPlay("start", -1);
 
     }
     /**
@@ -41,13 +33,13 @@ class startView extends egret.Sprite {
      * Click the button
      */
     private onButtonClick(e: egret.TouchEvent) {
+        
 
-        let bggun = new MainView(this);
-        this.addChild(bggun);
+        let bggun = new MainView(this.view);
 
+        this.view.addChild(bggun);
+    
         var sound: egret.Sound = RES.getRes("get_goods_wav");
         sound.play(0,1);
-
-         this.audio.playFightAudio()
     }
 }

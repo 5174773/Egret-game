@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="btnzailaiyici" width="400" height="300" xmlns:e="http://ns.egret.com/eui">
+	<e:Image width="129" height="58" x="135.5" y="121" anchorOffsetX="0" anchorOffsetY="0" source="btnzailaiyici_png" scale9Grid="0,0,0,0"/>
+</e:Skin>

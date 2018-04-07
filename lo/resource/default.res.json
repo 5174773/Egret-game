@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg,blue_plane_png,blue_bullet_png,myplaneexplosion_json,myplaneexplosion_png,myplaneexplosion2_png,myplaneexplosion2_json,my_bullet_purple_png,my_bullet_red_png,purple_plane_png,red_plane_png,small_enemy_png,small_png,small_json,play_2_png,play_1_png,big_png,big_json,big_1_png,big_2_png,n3_png,bullet_goods1_png,bullet_goods2_png,boss_bullet_default_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,description_json,BG_jpg,button_png,button2_png,fly_json,fly_png,bggun_jpg,blue_plane_png,blue_bullet_png,myplaneexplosion_json,myplaneexplosion_png,myplaneexplosion2_png,myplaneexplosion2_json,my_bullet_purple_png,my_bullet_red_png,purple_plane_png,red_plane_png,small_enemy_png,small_png,small_json,play_2_png,play_1_png,big_png,big_json,big_1_png,big_2_png,n3_png,bullet_goods1_png,bullet_goods2_png,boss_bullet_default_png,game_mp3,get_goods_wav,explosion_mp3,explosion2_wav,shoot_mp3,bigexplosion_wav,overBg_png,btnzailaiyici_png",
 			"name": "preload"
 		}
 	],
@@ -270,6 +270,46 @@
 			"name": "boss_bullet_default_png",
 			"type": "image",
 			"url": "assets/plane/boss_bullet_default.png"
+		},
+		{
+			"name": "game_mp3",
+			"type": "sound",
+			"url": "assets/Music/game.mp3"
+		},
+		{
+			"name": "get_goods_wav",
+			"type": "sound",
+			"url": "assets/Music/get_goods.wav"
+		},
+		{
+			"name": "explosion_mp3",
+			"type": "sound",
+			"url": "assets/Music/explosion.mp3"
+		},
+		{
+			"name": "explosion2_wav",
+			"type": "sound",
+			"url": "assets/Music/explosion2.wav"
+		},
+		{
+			"name": "shoot_mp3",
+			"type": "sound",
+			"url": "assets/Music/shoot.mp3"
+		},
+		{
+			"name": "bigexplosion_wav",
+			"type": "sound",
+			"url": "assets/Music/bigexplosion.wav"
+		},
+		{
+			"name": "overBg_png",
+			"type": "image",
+			"url": "config/overBg.png"
+		},
+		{
+			"name": "btnzailaiyici_png",
+			"type": "image",
+			"url": "assets/Button/btnzailaiyici.png"
 		}
 	]
 }

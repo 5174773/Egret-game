@@ -24,11 +24,7 @@ class BgMap extends egret.DisplayObjectContainer {
     }
     /**初始化*/
     private onAddToStage(event: egret.Event) {
-        //背景音乐
-        // var sound: egret.Sound = RES.getRes("game_music_mp3");
-        // sound.play();
-
-    
+        
         this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
         this.stageW = this.stage.stageWidth;
         this.stageH = this.stage.stageHeight;

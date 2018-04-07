@@ -8,6 +8,8 @@ class EnemyBig extends egret.Sprite {
 
     public HP: number
 
+    public flyLeft:boolean
+
 
     //
     public bigBool: boolean;
