@@ -2,42 +2,36 @@
  *    大敌机
  * 
  */
-class EnemyBig extends egret.Sprite {
-
-    public bigBitmap: egret.Bitmap;
+class EnemyBig extends BaseObjcet {
 
     public HP: number
 
-    public flyLeft:boolean
-
-
+    public flyLeft: boolean
     //
-    public bigBool: boolean;
     constructor() {
         super()
-
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initView, this)
     }
 
     public initView() {
-        this.bigBitmap = Lg.createBitmapByName("big_1_png")
+        const bigBitmap = Lg.createBitmapByName("big_1_png")
         this.HP = 20
-        this.bigBitmap.scaleX = 1.7;
-        this.bigBitmap.scaleY = 1.7;
-        this.addChild(this.bigBitmap);
+        bigBitmap.scaleX = 1.7;
+        bigBitmap.scaleY = 1.7;
+        this.addChild(bigBitmap);
     }
     //  图片二
     public initView2() {
-        this.bigBitmap = Lg.createBitmapByName("big_2_png")
-        this.bigBitmap.scaleX = 1.7;
-        this.bigBitmap.scaleY = 1.7;
-        this.addChild(this.bigBitmap);
+        const bigBitmap = Lg.createBitmapByName("big_2_png")
+        bigBitmap.scaleX = 1.7;
+        bigBitmap.scaleY = 1.7;
+        this.addChild(bigBitmap);
     }
 
 
 
     //飞机爆炸动画
-    public initMoviceClip(big:EnemyBig,gyg: MainView,bullet:PlaneBullet) {
+    public initMoviceClip(big: EnemyBig, gyg: MainView, bullet: PlaneBullet) {
         var data = RES.getRes("big_json");
         var txtr = RES.getRes("big_png");
         var mcFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(data, txtr);
@@ -50,6 +44,7 @@ class EnemyBig extends egret.Sprite {
             if (big.parent != null) {
                 // gyg.objEnemy.Free(enemy);
                 gyg.bigList.splice(gyg.bigList.indexOf(big), 1);
+                this.removeChildren;
                 gyg.removeChild(big);
             }
         }, this);

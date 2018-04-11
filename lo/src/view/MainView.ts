@@ -6,24 +6,25 @@ class MainView extends egret.DisplayObjectContainer {
     //积分
     public totalIntegral: number = 0;
     public totalIntegralText: egret.TextField;
-
-    
     private soundChannel: egret.SoundChannel;
 
     private myPlane: MyPlane;  //玩家飞机
     public BulletList: PlaneBullet[] = []
     public objcBullet: ObjPool<PlaneBullet>; //子弹缓存池
 
+    public objcBig: ObjPool<EnemyBig>
+
+
     public EnemyList: EnemyPlane[] = [];
     private EnemyNum: number = 6;
     public objEnemy: ObjPool<EnemyPlane>;
 
     public enemyBig: EnemyBig;
-    public big: egret.Timer
     public bigList: EnemyBig[] = [];
     public bigNum: number = 2
     public bigBullet: EnemyBullet;
     public bigBulletLits: EnemyBullet[] = []
+    public objcBigBullet: ObjPool<EnemyBullet>
 
     public flyLeft: boolean = true;
 
@@ -31,20 +32,22 @@ class MainView extends egret.DisplayObjectContainer {
     private bulletGoList: Array<any> = []
     private myBullet: PlaneBullet;
 
+    public big: egret.Timer
     public timer: egret.Timer
     public timer1: egret.Timer
     public timerEnemy: egret.Timer
     private wupin: egret.Timer
 
 
-    private uyguyguygu: startView
+    private main: Main
     constructor(t) {
         super()
-        this.uyguyguygu = t;
+        this.main = t;
         //创建池子
         this.objcBullet = new ObjPool<PlaneBullet>();
         this.objEnemy = new ObjPool<EnemyPlane>();
-
+        this.objcBig = new ObjPool<EnemyBig>();
+        this.objcBigBullet = new ObjPool<EnemyBullet>();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.myPlaneView, this)
         this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this); // 帧事件
 
@@ -68,7 +71,7 @@ class MainView extends egret.DisplayObjectContainer {
         let bggun = new BgMap();
         this.addChildAt(bggun, 0);
         bggun.start()
-      
+
 
     }
 
@@ -201,15 +204,16 @@ class MainView extends egret.DisplayObjectContainer {
             } else {
                 enemyBig.x += Math.ceil(Math.random() * 3);
             }
-            gyg.myPlanebaoza(enemyBig.x, enemyBig.y);
+            // gyg.myPlanebaoza(enemyBig.x, enemyBig.y);
         })
         gyg.bigBulletLits.forEach(function (bigBullet) {
-            bigBullet.y += 10
+            bigBullet.move();
             if (gyg == null || gyg.stage == null) {
                 return;
             }
             if (bigBullet.y >= gyg.stage.stageHeight) {
                 if (bigBullet.parent != null) {
+
                     gyg.removeChild(bigBullet)
                 }
             }
@@ -219,20 +223,20 @@ class MainView extends egret.DisplayObjectContainer {
     }
     //碰撞
     private gameHitTest(): void {
-       
+
         let gyg: MainView = this
-         if(gyg.totalIntegralText == null){
+        if (gyg.totalIntegralText == null) {
             return;
         }
         gyg.EnemyList.forEach(function (enemy) {
             gyg.BulletList.forEach(function (bullet) {
-                gyg.myPlanebaoza(enemy.x, enemy.y);
                 if (enemy.HP != 0 && enemy.hitTestPoint(bullet.x, bullet.y) == true) {
 
                     if (bullet.parent != null) {
                         enemy.HP--
                         gyg.removeChild(bullet);
                     }
+
                     if (enemy.HP == 0) {
                         var sound: egret.Sound = RES.getRes("explosion_mp3");
                         sound.play(0, 1);
@@ -247,7 +251,6 @@ class MainView extends egret.DisplayObjectContainer {
                             gyg.removeChild(bullet);
                         }
                         if (enemyBig.HP == 0) {
-
                             var sound: egret.Sound = RES.getRes("bigexplosion_wav");
                             sound.play(0, 1);
                             enemyBig.initMoviceClip(enemyBig, gyg, bullet)
@@ -262,7 +265,7 @@ class MainView extends egret.DisplayObjectContainer {
     //时间控制创建 子弹
     public timerInitPlaneBullet() {
         const objc: boolean = this.objcBullet.hasObjcet();
-        const bullet = this.objcBullet.AllcoObj(PlaneBullet);
+        let bullet = this.objcBullet.AllcoObj(PlaneBullet);
         bullet.initView(1)
         bullet.timerOne = true
         bullet.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10
@@ -303,6 +306,7 @@ class MainView extends egret.DisplayObjectContainer {
             this.addChild(bullet);
             this.BulletList.push(bullet);
         }
+
         const objc2: boolean = this.objcBullet.hasObjcet();
         const bullet2 = this.objcBullet.AllcoObj(PlaneBullet);
         bullet2.x = (this.myPlane.x) + (this.myPlane.width / 2) - 10 - 100
@@ -316,24 +320,25 @@ class MainView extends egret.DisplayObjectContainer {
         }
     }
     timerInitBig() {
-
-        while (this.bigList.length < this.bigNum) {
-            this.enemyBig = new EnemyBig();
-            this.addChildAt(this.enemyBig, 1)
-            this.enemyBig.x = Math.random() * (this.stage.stageWidth - this.enemyBig.width);
-            this.enemyBig.y = 0;
-            this.bigList.push(this.enemyBig)
-
+        if (this.bigList.length < this.bigNum) {
+            const objc: boolean = this.objcBig.hasObjcet();
+            const big = this.objcBig.AllcoObj(EnemyBig);
+            this.addChildAt(big, 1)
+            big.x = Math.random() * (this.stage.stageWidth - 100);
+            big.y = 0;
+            this.bigList.push(big)
         }
-        var bigEnemy: egret.Timer = new egret.Timer(3000, 2);
-        bigEnemy.addEventListener(egret.TimerEvent.TIMER, this.initbigBullet, this);
-        bigEnemy.start();
+        // var bigEnemy: egret.Timer = new egret.Timer(3000, 1);
+        // bigEnemy.addEventListener(egret.TimerEvent.TIMER, this.initbigBullet, this);
+        // bigEnemy.start();
+        this.initbigBullet()
 
     }
     initbigBullet() {
         let gyg: MainView = this
         this.bigList.forEach(function (enemyBig) {
-            const bigBullet = new EnemyBullet();
+            const objc: boolean = gyg.objcBigBullet.hasObjcet();
+            const bigBullet = gyg.objcBigBullet.AllcoObj(EnemyBullet);
             bigBullet.x = enemyBig.x + 84;
             bigBullet.y = enemyBig.y + 84;
             gyg.addChild(bigBullet)
@@ -344,8 +349,7 @@ class MainView extends egret.DisplayObjectContainer {
     myPlanebaoza(x, y) {
 
         if (this.myPlane.hitTestPoint(x, y) == true) {
-
-              //背景关闭
+            //背景关闭
 
             this.timer.stop() //停止 时间创建
             this.timer1.stop()
@@ -358,13 +362,9 @@ class MainView extends egret.DisplayObjectContainer {
 
             // this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this); 
             this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this)
-            let sktop = new StopView(this.uyguyguygu)
-
-
-            this.uyguyguygu.addChild(sktop)
-
-
-            this.uyguyguygu.removeChild(this)
+            let sktop = new StopView(this.main)
+            this.main.addChild(sktop)
+            this.main.removeChild(this)
 
 
         }

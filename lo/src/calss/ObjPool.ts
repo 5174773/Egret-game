@@ -14,7 +14,6 @@ class ObjPool<T>
                         var obj: T = new ctor();
                         return obj;
                 }
-
                 return this.m_pool.shift();
         }
 

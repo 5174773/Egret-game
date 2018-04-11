@@ -1,4 +1,4 @@
-class EnemyPlane extends egret.Sprite {
+class EnemyPlane extends BaseObjcet{
     public speed: number = 3;
     public flyLeft: boolean = true;   //是否向左飞
     public myEnemy: egret.Bitmap;

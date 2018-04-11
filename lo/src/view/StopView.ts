@@ -1,13 +1,10 @@
 class StopView extends egret.Sprite {
 
-    private view:startView
+    private main: Main
 
-    constructor(view) {
+    constructor(main) {
         super()
-       
-       this.view = view
-        
-
+        this.main = main
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initStartView, this);
     }
 
@@ -33,13 +30,11 @@ class StopView extends egret.Sprite {
      * Click the button
      */
     private onButtonClick(e: egret.TouchEvent) {
-        
 
-        let bggun = new MainView(this.view);
-
-        this.view.addChild(bggun);
-    
+        let bggun = new MainView(this.main);
+        this.main.addChild(bggun);
+        this.main.removeChild(this);
         var sound: egret.Sound = RES.getRes("get_goods_wav");
-        sound.play(0,1);
+        sound.play(0, 1);
     }
 }

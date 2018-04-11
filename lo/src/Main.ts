@@ -26,7 +26,6 @@ class Main extends eui.UILayer {
         this.runGame().catch(e => {
             console.log(e);
 
-
         })
     }
 
@@ -74,10 +73,11 @@ class Main extends eui.UILayer {
      */
     protected createGameScene(): void {
 
-        let view = new startView();
+        let view = new startView(this);
+        view.width = this.stage.stageWidth;
+        view.height = this.stage.stageHeight;
         this.addChild(view);
-
-
+        
         this.onGet()
 
         

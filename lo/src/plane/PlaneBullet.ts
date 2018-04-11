@@ -1,10 +1,9 @@
 //玩家子弹
 
-class PlaneBullet extends egret.Sprite {
+class PlaneBullet extends BaseObjcet {
     public isAlive: boolean;        // 存活状态
-
-    public myBUllet: egret.Bitmap;
-    public timerOne:boolean 
+    public timerOne: boolean
+    private myBUllet;
 
     constructor() {
         super()
@@ -15,18 +14,14 @@ class PlaneBullet extends egret.Sprite {
     initView(name: number) {
         switch (name) {
             case 1:
-                this.myBUllet = Lg.createBitmapByName("blue_bullet_png")
-                this.myBUllet.scaleX = 1.3
-                this.myBUllet.scaleY = 1.3;
-                this.addChild(this.myBUllet)
+                let myBUllet = Lg.createBitmapByName("blue_bullet_png")
+                myBUllet.scaleX = 1.3
+                myBUllet.scaleY = 1.3;
+                this.addChild(myBUllet)
                 break;
-            case 2: this.myBUllet = Lg.createBitmapByName("my_bullet_purple_png")
-                this.myBUllet.scaleX = 1.5
-                this.myBUllet.scaleY = 1.5;
-                this.addChild(this.myBUllet)
-                break;
-            case 3: this.myBUllet = Lg.createBitmapByName("my_bullet_red_png")
-                this.myBUllet.scaleX = 1.5
+            case 2:
+                this.myBUllet = Lg.createBitmapByName("my_bullet_purple_png")
+                this.myBUllet.scaleX = 1.5;
                 this.myBUllet.scaleY = 1.5;
                 this.addChild(this.myBUllet)
                 break;
@@ -36,6 +31,9 @@ class PlaneBullet extends egret.Sprite {
 
 
     initFil() {
+
+        this.type = 2;
+        
         // this.myBUllet = Lg.createBitmapByName("blue_bullet_png")
         // this.addChild(this.myBUllet)
 

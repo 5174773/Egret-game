@@ -2,7 +2,7 @@
  * 玩家飞机
  */
 
-class MyPlane extends egret.Sprite {
+class MyPlane extends BaseObjcet {
 
     //飞机
     public myPlaneBitmap: egret.Bitmap;
@@ -10,13 +10,12 @@ class MyPlane extends egret.Sprite {
     constructor() {
 
         super();
-
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initView, this) //添加精灵
         
     }
     //初始化
     public initView() {
-
+        this.type = 1;
         this.myPlaneBitmap = Lg.createBitmapByName("blue_plane_png");
         this.myPlaneBitmap.scaleX = 1.7;
         this.myPlaneBitmap.scaleY = 1.7;

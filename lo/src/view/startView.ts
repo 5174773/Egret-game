@@ -1,10 +1,9 @@
 class startView extends egret.Sprite {
+    private main: Main;
 
-    public audio:AudioManager;
-
-    constructor() {
+    constructor(main) {
         super()
-
+        this.main = main;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initStartView, this);
     }
 
@@ -41,13 +40,12 @@ class startView extends egret.Sprite {
      * Click the button
      */
     private onButtonClick(e: egret.TouchEvent) {
-
-        let bggun = new MainView(this);
-        this.addChild(bggun);
-
+        let bggun = new MainView(this.main);
+        this.main.addChild(bggun);
+        this.main.removeChild(this);
         var sound: egret.Sound = RES.getRes("get_goods_wav");
-        sound.play(0,1);
+        sound.play(0, 1);
 
-         this.audio.playFightAudio()
+        AudioManager.getInstance().playFightAudio()
     }
 }
