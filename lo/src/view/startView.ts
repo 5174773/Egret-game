@@ -48,4 +48,5 @@ class startView extends egret.Sprite {
 
         AudioManager.getInstance().playFightAudio()
     }
+    //houhou
 }
