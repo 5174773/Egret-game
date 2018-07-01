@@ -18,7 +18,7 @@ egret_native.egretInit = function () {
         //Control whether some optimization options are open
         var result = egret_native.featureEnable({
             
-        });
+        });    
     }
     egret_native.requireFiles();
     egret.dom = {};
