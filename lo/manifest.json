@@ -31,4 +31,5 @@
 		"bin-debug/view/startView.js",
 		"bin-debug/view/StopView.js"
 	]
-}
+}    
+
